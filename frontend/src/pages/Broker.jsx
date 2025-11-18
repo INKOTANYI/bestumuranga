@@ -835,10 +835,20 @@ export default function Broker() {
                     {user?.created_at && (
                       <span>Joined: {new Date(user.created_at).toLocaleDateString()}</span>
                     )}
-                    {user?.country && <span>Country: {user.country}</span>}
-                    {user?.province && <span>Province: {user.province}</span>}
-                    {user?.district && <span>District: {user.district}</span>}
-                    {user?.sector && <span>Sector: {user.sector}</span>}
+                    {(() => {
+                      const rawCountry = user?.country || ''
+                      if (!rawCountry) return null
+                      const label = rawCountry === 'RW' ? 'Rwanda' : rawCountry === 'DRC' ? 'DRC' : rawCountry
+                      return <span>Country: {label}</span>
+                    })()}
+                    {(() => {
+                      const province = user?.province || user?.broker_province
+                      const district = user?.district || user?.broker_district
+                      const sector = user?.sector || user?.broker_sector
+                      const parts = [province, district, sector].filter(Boolean)
+                      if (parts.length === 0) return null
+                      return <span>Location: {parts.join(' - ')}</span>
+                    })()}
                   </div>
                 </div>
               </div>

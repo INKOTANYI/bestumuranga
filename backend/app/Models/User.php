@@ -25,6 +25,7 @@ class User extends Authenticatable
         'email',
         'phone',
         'address',
+        'country',
         'password',
         'role',
         'broker_status',

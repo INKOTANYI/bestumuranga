@@ -16,9 +16,9 @@ const resources = {
       },
       home: {
         hero_welcome: 'Welcome to BestUmuranga',
-        hero_title: 'BestUmuranga classifieds for Rwanda and DR Congo.',
+        hero_title: 'Your trusted classifieds hub for Rwanda and DR Congo.',
         hero_subtitle:
-          'Your simple marketplace to list and discover vehicles, properties and services in Rwanda and DR Congo.',
+          'Post and discover verified listings for vehicles, homes, electronics, furniture, jobs and more  all in one simple platform built for Rwanda and DR Congo.',
         search_country: 'Country',
         search_province: 'Province',
         search_city: 'City',
@@ -169,9 +169,9 @@ const resources = {
       },
       home: {
         hero_welcome: 'Karibu BestUmuranga',
-        hero_title: 'Matangazo ya biashara kwa Rwanda na DR Congo.',
+        hero_title: 'Jukwaa lako la matangazo kwa Rwanda na DR Congo.',
         hero_subtitle:
-          'Soko rahisi la kununua, kuuza au kupangisha magari, nyumba na huduma nchini Rwanda na DR Congo.',
+          'Tangaza au tafuta magari, nyumba, elektroniki, fanicha, ajira na huduma mbali mbali  yote kwenye jukwaa moja rahisi na linaloaminika kwa Rwanda na DR Congo.',
         search_country: 'Nchi',
         search_province: 'Mkoa',
         search_city: 'Jiji',

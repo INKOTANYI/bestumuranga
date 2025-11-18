@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { register, checkEmailAvailable, checkPhoneAvailable, me, getProvinces, getDistricts, getSectors, getCities, getTerritories } from '../lib/api'
 import { useNavigate } from 'react-router-dom'
+import PublicHeaderClean from '../components/PublicHeaderClean'
+import PublicFooter from '../components/PublicFooter'
 
 export default function BrokerRegister() {
   const nav = useNavigate()
@@ -48,19 +50,36 @@ export default function BrokerRegister() {
   }
   function validatePhone(v, c){
     if (c === 'DRC') {
-      return /^\+243[0-9]{9}$/.test(v)
+      return /^[0-9]{12}$/.test(v)
     }
-    return /^(078|072|073)[0-9]{7}$/.test(v)
+    return /^(078|072|073|079)[0-9]{7}$/.test(v)
   }
   function validatePassword(v){
     return strength(v) >= 4
+  }
+
+  // Normalize phone to backend format before API calls
+  function toBackendPhone(v, c) {
+    if (!v) return v
+    if (c === 'DRC') {
+      // User types 12 digits after the +243 prefix shown in UI; backend expects +243 followed by those 12 digits
+      if (/^[0-9]{12}$/.test(v)) {
+        return '+243' + v
+      }
+      return v
+    }
+    // Rwanda: allow local 078/072/073/079xxxxxxx, backend expects +2507(2/3/8/9)xxxxxxx
+    if (/^(078|072|073|079)[0-9]{7}$/.test(v)) {
+      return '+250' + v.slice(1)
+    }
+    return v
   }
 
   const fieldErrors = {
     first_name: !first_name ? 'First name is required' : '',
     last_name: !last_name ? 'Last name is required' : '',
     email: !email ? 'Email is required' : (!validateEmail(email) ? 'Enter a valid email' : (emailAvailable === false ? 'Email already taken' : '')),
-    phone: !phone ? 'Phone is required' : (!validatePhone(phone, country) ? (country === 'DRC' ? 'Use format +243XXXXXXXXX' : 'Use format 078xxxxxxx / 072xxxxxxx / 073xxxxxxx') : (phoneAvailable === false ? 'Phone already taken' : '')),
+    phone: !phone ? 'Phone is required' : (!validatePhone(phone, country) ? (country === 'DRC' ? 'Use 12 digits after +243' : 'Use format 078xxxxxxx / 072xxxxxxx / 073xxxxxxx') : (phoneAvailable === false ? 'Phone already taken' : '')),
     password: !password ? 'Password is required' : (!validatePassword(password) ? 'Password too weak' : ''),
     password2: password2 !== password ? 'Passwords do not match' : '',
     province_id: !province_id ? 'Select province' : '',
@@ -90,14 +109,15 @@ export default function BrokerRegister() {
     return () => clearTimeout(t)
   }, [email])
 
-  // Debounced phone availability check
+  // Debounced phone availability check (convert to backend format)
   useEffect(() => {
     setPhoneAvailable(null)
     if (!phone || !validatePhone(phone, country)) return
+    const backendPhone = toBackendPhone(phone, country)
     const t = setTimeout(async () => {
       try {
         setPhoneChecking(true)
-        const res = await checkPhoneAvailable(phone)
+        const res = await checkPhoneAvailable(backendPhone)
         setPhoneAvailable(!!res.available)
       } catch {
         setPhoneAvailable(null)
@@ -188,7 +208,8 @@ export default function BrokerRegister() {
         setLoading(false);
         return
       }
-      const payload = { first_name, last_name, email, phone, password, password_confirmation: password2, role: 'broker', country, province_id, district_id, sector_id, city_id, territory_id }
+      const backendPhone = toBackendPhone(phone, country)
+      const payload = { first_name, last_name, email, phone: backendPhone, password, password_confirmation: password2, role: 'broker', country, province_id, district_id, sector_id, city_id, territory_id }
       await register(payload)
       const fresh = await me()
       const role = fresh?.user?.role
@@ -213,23 +234,15 @@ export default function BrokerRegister() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-8 bg-gradient-to-tr from-purple-300/60 via-white to-purple-200/60">
-      <div className="w-full max-w-5xl grid md:grid-cols-2 bg-white rounded-2xl shadow-2xl overflow-hidden border">
-        {/* Left welcome panel */}
-        <div className="relative hidden md:block">
-          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=1600&auto=format&fit=crop')] bg-cover bg-center" />
-          <div className="relative h-full w-full p-8 bg-black/40 text-white flex flex-col justify-end">
-            <h2 className="text-3xl font-bold drop-shadow">Welcome</h2>
-            <p className="mt-3 text-sm text-gray-100 max-w-sm">Create your account. It’s free and only takes a minute. Manage listings and more after you sign in.</p>
-            <button type="button" onClick={()=>nav('/auth-test')} className="mt-6 inline-flex items-center gap-2 text-sm text-white/90 hover:text-white">Already have an account? Login</button>
-          </div>
-        </div>
-
-        {/* Right form panel */}
-        <div className="p-8">
-          <h3 className="text-2xl font-semibold">Register</h3>
-          <p className="text-gray-600 text-sm mt-1 mb-6">Create your account. It’s free and only takes a minute.</p>
-          <form onSubmit={submit} className="grid gap-4">
+    <div className="min-h-screen bg-slate-900 flex flex-col">
+      <PublicHeaderClean />
+      <div className="flex-1 flex items-center justify-center px-4 py-8 bg-gradient-to-tr from-purple-300/60 via-white to-purple-200/60">
+        <div className="w-full max-w-3xl bg-white rounded-2xl shadow-2xl overflow-hidden border">
+          {/* Form panel only */}
+          <div className="p-8">
+            <h3 className="text-2xl font-semibold">Register</h3>
+            <p className="text-gray-600 text-sm mt-1 mb-6">Create your account. It’s free and only takes a minute.</p>
+            <form onSubmit={submit} className="grid gap-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <input className={`border rounded-lg px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500 ${touched.first_name && fieldErrors.first_name ? 'border-rose-500' : 'border-gray-300'}`} placeholder="First Name" value={first_name} onChange={e=>{ setFirst(e.target.value); setTouched(t=>({...t,first_name:true})) }} onBlur={()=>setTouched(t=>({...t,first_name:true}))} required />
@@ -331,7 +344,7 @@ export default function BrokerRegister() {
                 </div>
                 <input
                   className={`border rounded-r-lg px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500 ${touched.phone && fieldErrors.phone ? 'border-rose-500' : 'border-gray-300'}`}
-                  placeholder={country === 'DRC' ? 'Phone (e.g. +2439XXXXXXXX)' : 'Phone (e.g. 0781234567)'}
+                  placeholder={country === 'DRC' ? 'Phone (12 digits after +243)' : 'Phone (e.g. 0781234567)'}
                   value={phone}
                   onChange={e=>{ setPhone(e.target.value); setTouched(t=>({...t,phone:true})) }}
                   onBlur={()=>setTouched(t=>({...t,phone:true}))}
@@ -372,7 +385,9 @@ export default function BrokerRegister() {
             )}
           </form>
         </div>
+        </div>
       </div>
+      <PublicFooter />
     </div>
   )
 }

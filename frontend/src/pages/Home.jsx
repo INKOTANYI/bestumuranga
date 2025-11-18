@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { getCategories, getListingsPublic, getProvinces, getCities, getTerritories } from '../lib/api'
 import { Link, useLocation } from 'react-router-dom'
-import Header from '../components/Header'
+import PublicHeaderClean from '../components/PublicHeaderClean'
 import PublicFooter from '../components/PublicFooter'
 import { useTranslation } from 'react-i18next'
 
@@ -202,7 +202,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-slate-900 flex flex-col">
-      <Header />
+      <PublicHeaderClean />
 
       {/* Hero banner */}
       <section className="relative w-full bg-slate-950">
@@ -217,24 +217,16 @@ export default function Home() {
 
           {/* Hero content */}
           <div className="relative max-w-6xl mx-auto h-full px-4 lg:px-8 flex items-center justify-center">
-            <div className="max-w-xl text-white space-y-4 text-center">
-              <p className="text-xs md:text-sm font-semibold tracking-[0.25em] uppercase text-orange-300">
+            <div className="max-w-2xl text-white space-y-5 text-center">
+              <p className="text-xs md:text-sm lg:text-base font-semibold tracking-[0.3em] uppercase text-orange-300/95">
                 {t('home.hero_welcome')}
               </p>
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-semibold leading-tight">
+              <h1 className="text-3xl md:text-5xl lg:text-[3.35rem] font-semibold leading-tight md:leading-[1.15] lg:leading-[1.15] drop-shadow-md">
                 {t('home.hero_title')}
               </h1>
-              <p className="text-sm md:text-base text-slate-200/90 max-w-md">
+              <p className="text-sm md:text-lg lg:text-xl text-slate-100/95 max-w-2xl mx-auto">
                 {t('home.hero_subtitle')}
               </p>
-              <div className="pt-1 flex justify-center">
-                <a
-                  href="#promoted-ads"
-                  className="inline-flex items-center rounded-full bg-amber-400 px-4 py-2 text-xs md:text-sm font-semibold text-slate-900 hover:bg-amber-300 shadow-md shadow-black/30"
-                >
-                  View listings
-                </a>
-              </div>
             </div>
           </div>
         </div>

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use Illuminate\Validation\Rules\Password;
+use App\Services\SmsService;
 
 class AuthController extends Controller
 {
@@ -18,11 +19,11 @@ class AuthController extends Controller
             'last_name'  => ['nullable','string','max:100'],
             'name'       => ['nullable','string','max:191'],
             'email'      => ['required','email','max:191','unique:users,email'],
-            // Rwanda: +25072/73/78xxxxxxx (e.g. +250783163187), DRC: +243 followed by 9 digits
+            // Rwanda: +25072/73/78/79xxxxxxx (e.g. +250783163187), DRC: +243 followed by 12 digits
             'phone'      => [
                 'required',
                 'string',
-                'regex:/^(\+2507(2|3|8)[0-9]{7}|\+243[0-9]{9})$/',
+                'regex:/^(\+2507(2|3|8|9)[0-9]{7}|\+243[0-9]{12})$/',
                 'unique:users,phone',
             ],
             'address'    => ['nullable','string','max:255'],
@@ -73,6 +74,12 @@ class AuthController extends Controller
             'broker_district' => $districtName,
             'broker_sector'   => $sectorName,
         ]);
+
+        // SMS notification to newly registered broker
+        if ($user->phone) {
+            $text = 'Welcome to BestUmuranga! Your broker account is ready. You can now login and start posting listings.';
+            SmsService::send($user->phone, $text);
+        }
 
         Auth::login($user);
         $request->session()->regenerate();
@@ -132,8 +139,8 @@ class AuthController extends Controller
     public function checkPhone(Request $request)
     {
         $validated = $request->validate([
-            // Same strict pattern as register(): Rwanda +2507(2/3/8)xxxxxxx, DRC +243xxxxxxxxx
-            'phone' => ['required','regex:/^(\+2507(2|3|8)[0-9]{7}|\+243[0-9]{9})$/'],
+            // Same strict pattern as register(): Rwanda +2507(2/3/8/9)xxxxxxx, DRC +243 followed by 12 digits
+            'phone' => ['required','regex:/^(\+2507(2|3|8|9)[0-9]{7}|\+243[0-9]{12})$/'],
         ]);
         $exists = User::where('phone', $validated['phone'])->exists();
         return response()->json(['available' => ! $exists]);

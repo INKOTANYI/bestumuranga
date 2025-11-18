@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Inquiry;
 use Illuminate\Http\Request;
+use App\Services\SmsService;
 
 class InquiryController extends Controller
 {
@@ -88,6 +89,12 @@ class InquiryController extends Controller
         $inq = Inquiry::where('broker_id', $user->id)->findOrFail($id);
         $inq->status = 'responded';
         $inq->save();
+
+        // Optional SMS notification to the client when broker responds
+        if ($inq->client_phone) {
+            $msg = 'BestUmuranga: Your enquiry has been updated. Our broker has responded or started processing your request.';
+            SmsService::send($inq->client_phone, $msg);
+        }
 
         return response()->json(['data' => $inq]);
     }

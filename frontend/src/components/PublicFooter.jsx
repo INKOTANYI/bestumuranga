@@ -1,4 +1,5 @@
 import { Facebook, Twitter, Instagram, Linkedin, Youtube } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 export default function PublicFooter() {
   return (
@@ -37,6 +38,10 @@ export default function PublicFooter() {
             <a href="/#promoted-ads" className="hover:text-white underline-offset-2 hover:underline">
               View listings
             </a>
+            <span className="h-3 w-px bg-sky-700" />
+            <Link to="/register-broker" className="hover:text-white underline-offset-2 hover:underline">
+              Register as broker
+            </Link>
           </div>
         </div>
 

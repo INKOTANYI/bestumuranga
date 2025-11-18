@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { getListing, createInquiry } from '../lib/api'
 import { toast } from 'sonner'
-import Header from '../components/Header'
+import PublicHeaderClean from '../components/PublicHeaderClean'
 import PublicFooter from '../components/PublicFooter'
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000'
@@ -26,7 +26,7 @@ export default function Detail() {
   if (!item) {
     return (
       <div className="min-h-screen bg-slate-100 flex flex-col">
-        <Header />
+        <PublicHeaderClean />
         <div className="flex-1 flex items-center justify-center text-slate-600 text-sm">Loading listing…</div>
         <PublicFooter />
       </div>
@@ -104,7 +104,7 @@ export default function Detail() {
 
   return (
     <div className="min-h-screen bg-slate-100 flex flex-col">
-      <Header />
+      <PublicHeaderClean />
       <div className="flex-1 max-w-6xl mx-auto px-4 lg:px-6 py-6 lg:py-8 flex flex-col lg:flex-row gap-6">
         {/* Left: gallery + details */}
         <div className="flex-1 min-w-0">
