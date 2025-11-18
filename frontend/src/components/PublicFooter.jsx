@@ -7,6 +7,15 @@ export default function PublicFooter() {
       <div className="max-w-7xl mx-auto px-4 lg:px-8 py-8 flex flex-col items-center gap-4 text-sm">
         {/* Social links row */}
         <div className="flex flex-wrap items-center justify-center gap-5 mb-1">
+          <a
+            href="https://wa.me/250783163187"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 hover:text-white"
+          >
+            <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-emerald-500 text-[11px] font-semibold text-white mr-1">W</span>
+            <span>WhatsApp</span>
+          </a>
           <a href="#" className="inline-flex items-center gap-1.5 hover:text-white">
             <Facebook className="w-4 h-4" />
             <span>Facebook</span>
