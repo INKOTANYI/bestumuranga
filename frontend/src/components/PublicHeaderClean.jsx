@@ -85,7 +85,9 @@ export default function PublicHeaderClean() {
               I
             </a>
             <a
-              href="#"
+              href="https://wa.me/250783163187"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center justify-center h-6 w-6 rounded-full border border-emerald-400/80 bg-emerald-600/80 text-[11px] font-semibold text-white hover:bg-emerald-500 hover:border-emerald-200 transition"
               aria-label="WhatsApp"
             >
@@ -202,7 +204,7 @@ export default function PublicHeaderClean() {
                       value={loginEmail}
                       onChange={e => setLoginEmail(e.target.value)}
                       onBlur={() => setLoginTouched(t => ({ ...t, email: true }))}
-                      className={`border rounded-lg px-3 py-2 w-full text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500 ${loginTouched.email && loginFieldErrors.email ? 'border-rose-500' : 'border-gray-300'}`}
+                      className={`border rounded-lg px-3 py-2 w-full bg-white text-slate-900 placeholder-slate-400 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500 ${loginTouched.email && loginFieldErrors.email ? 'border-rose-500' : 'border-gray-300'}`}
                       required
                     />
                     {loginTouched.email && loginFieldErrors.email && (
@@ -216,7 +218,7 @@ export default function PublicHeaderClean() {
                       value={loginPassword}
                       onChange={e => setLoginPassword(e.target.value)}
                       onBlur={() => setLoginTouched(t => ({ ...t, password: true }))}
-                      className={`border rounded-lg px-3 py-2 w-full text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500 ${loginTouched.password && loginFieldErrors.password ? 'border-rose-500' : 'border-gray-300'}`}
+                      className={`border rounded-lg px-3 py-2 w-full bg-white text-slate-900 placeholder-slate-400 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500 ${loginTouched.password && loginFieldErrors.password ? 'border-rose-500' : 'border-gray-300'}`}
                       required
                     />
                     {loginTouched.password && loginFieldErrors.password && (

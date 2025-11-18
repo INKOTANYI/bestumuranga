@@ -216,7 +216,7 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/40 to-black/10" />
 
           {/* Hero content */}
-          <div className="relative max-w-6xl mx-auto h-full px-4 lg:px-8 flex items-center justify-center">
+          <div className="relative max-w-7xl mx-auto h-full px-4 lg:px-10 flex items-center justify-center">
             <div className="max-w-2xl text-white space-y-5 text-center">
               <p className="text-xs md:text-sm lg:text-base font-semibold tracking-[0.3em] uppercase text-orange-300/95">
                 {t('home.hero_welcome')}
@@ -232,7 +232,7 @@ export default function Home() {
         </div>
 
         {/* Search bar overlay */}
-        <div className="relative max-w-6xl mx-auto px-4 lg:px-8 -mt-14 md:-mt-16">
+        <div className="relative max-w-7xl mx-auto px-4 lg:px-10 -mt-14 md:-mt-16">
           <form
             onSubmit={applyFilters}
             className="rounded-xl md:rounded-full bg-white shadow-xl shadow-black/25 border border-slate-200 px-3 py-3 md:px-5 md:py-4 flex flex-col md:flex-row gap-2 md:gap-3 items-stretch md:items-center"
@@ -335,7 +335,7 @@ export default function Home() {
 
       {/* Promoted ads section with sidebar */}
       <section id="promoted-ads" className="bg-white flex-1">
-        <div className="max-w-6xl mx-auto px-4 lg:px-8 pb-10 pt-12">
+        <div className="max-w-7xl mx-auto px-4 lg:px-10 pb-12 pt-14">
           <div className="mb-6 flex flex-col items-center text-center">
             <h2 className="text-xl md:text-2xl font-semibold tracking-tight text-slate-900">{t('home.promoted_title')}</h2>
             <p className="text-xs md:text-sm text-slate-500 mt-1">{t('home.promoted_subtitle')}</p>

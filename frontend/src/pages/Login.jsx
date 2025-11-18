@@ -55,11 +55,11 @@ export default function Login() {
           <p className="text-gray-600 text-sm mt-1 mb-6">Enter your credentials to continue.</p>
           <form onSubmit={submit} className="grid gap-4">
             <div>
-              <input className={`border rounded-lg px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500 ${touched.email && fieldErrors.email ? 'border-rose-500' : 'border-gray-300'}`} placeholder="Email" type="email" value={email} onChange={e=>setEmail(e.target.value)} onBlur={()=>setTouched(t=>({...t,email:true}))} required />
+              <input className={`border rounded-lg px-3 py-2 w-full bg-white text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 ${touched.email && fieldErrors.email ? 'border-rose-500' : 'border-gray-300'}`} placeholder="Email" type="email" value={email} onChange={e=>setEmail(e.target.value)} onBlur={()=>setTouched(t=>({...t,email:true}))} required />
               {touched.email && fieldErrors.email && <div className="text-rose-600 text-xs mt-1">{fieldErrors.email}</div>}
             </div>
             <div>
-              <input className={`border rounded-lg px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500 ${touched.password && fieldErrors.password ? 'border-rose-500' : 'border-gray-300'}`} placeholder="Password" type="password" value={password} onChange={e=>setPassword(e.target.value)} onBlur={()=>setTouched(t=>({...t,password:true}))} required />
+              <input className={`border rounded-lg px-3 py-2 w-full bg-white text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 ${touched.password && fieldErrors.password ? 'border-rose-500' : 'border-gray-300'}`} placeholder="Password" type="password" value={password} onChange={e=>setPassword(e.target.value)} onBlur={()=>setTouched(t=>({...t,password:true}))} required />
               {touched.password && fieldErrors.password && <div className="text-rose-600 text-xs mt-1">{fieldErrors.password}</div>}
             </div>
             <button disabled={loading || !isValid} className="rounded-lg bg-indigo-600 hover:bg-indigo-700 transition text-white px-4 py-2 font-medium disabled:opacity-60 disabled:cursor-not-allowed">{loading ? 'Signing in...' : 'Login'}</button>

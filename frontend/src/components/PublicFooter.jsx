@@ -3,38 +3,38 @@ import { Link } from 'react-router-dom'
 
 export default function PublicFooter() {
   return (
-    <footer className="mt-auto bg-sky-900 text-sky-100 border-t border-sky-800">
-      <div className="max-w-6xl mx-auto px-4 lg:px-6 py-6 flex flex-col items-center gap-3 text-xs">
+    <footer className="mt-auto bg-sky-950 text-sky-100 border-t border-sky-800/80">
+      <div className="max-w-7xl mx-auto px-4 lg:px-8 py-8 flex flex-col items-center gap-4 text-sm">
         {/* Social links row */}
-        <div className="flex flex-wrap items-center justify-center gap-4 mb-1">
-          <a href="#" className="inline-flex items-center gap-1 hover:text-white">
-            <Facebook className="w-3.5 h-3.5" />
+        <div className="flex flex-wrap items-center justify-center gap-5 mb-1">
+          <a href="#" className="inline-flex items-center gap-1.5 hover:text-white">
+            <Facebook className="w-4 h-4" />
             <span>Facebook</span>
           </a>
-          <a href="#" className="inline-flex items-center gap-1 hover:text-white">
-            <Twitter className="w-3.5 h-3.5" />
+          <a href="#" className="inline-flex items-center gap-1.5 hover:text-white">
+            <Twitter className="w-4 h-4" />
             <span>Twitter</span>
           </a>
-          <a href="#" className="inline-flex items-center gap-1 hover:text-white">
-            <Instagram className="w-3.5 h-3.5" />
+          <a href="#" className="inline-flex items-center gap-1.5 hover:text-white">
+            <Instagram className="w-4 h-4" />
             <span>Instagram</span>
           </a>
-          <a href="#" className="inline-flex items-center gap-1 hover:text-white">
-            <Linkedin className="w-3.5 h-3.5" />
+          <a href="#" className="inline-flex items-center gap-1.5 hover:text-white">
+            <Linkedin className="w-4 h-4" />
             <span>LinkedIn</span>
           </a>
-          <a href="#" className="inline-flex items-center gap-1 hover:text-white">
-            <Youtube className="w-3.5 h-3.5" />
+          <a href="#" className="inline-flex items-center gap-1.5 hover:text-white">
+            <Youtube className="w-4 h-4" />
             <span>YouTube</span>
           </a>
         </div>
 
         {/* Brand + quick links */}
-        <div className="flex flex-col items-center gap-1">
-          <div className="text-sm font-semibold tracking-wide">
+        <div className="flex flex-col items-center gap-1.5">
+          <div className="text-base font-semibold tracking-wide">
             Bestumuranga.com
           </div>
-          <div className="flex items-center gap-3 text-[11px] text-sky-100/90">
+          <div className="flex items-center gap-4 text-xs text-sky-100/90">
             <a href="/#promoted-ads" className="hover:text-white underline-offset-2 hover:underline">
               View listings
             </a>
@@ -46,7 +46,7 @@ export default function PublicFooter() {
         </div>
 
         {/* Copyright */}
-        <div className="text-[11px] text-sky-200/80">
+        <div className="text-xs text-sky-200/85">
           © 2025 Bestumuranga.com - All rights reserved
         </div>
       </div>
