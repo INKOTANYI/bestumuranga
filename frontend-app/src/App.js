@@ -3,6 +3,8 @@ import { FaBed, FaBath, FaHome, FaBuilding, FaUserTie, FaEnvelope } from 'react-
 import './App.css';
 import rwandaLocations from './data/rwanda-locations.json';
 
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://bestumuranga.com/api';
+
 function BrokerDashboard({ broker }) {
   const [listings, setListings] = useState([]);
   const [editListing, setEditListing] = useState(null);
@@ -50,7 +52,7 @@ function BrokerDashboard({ broker }) {
 
   const fetchListings = async () => {
     try {
-      const res = await fetch(`http://127.0.0.1:8000/api/listings?broker_id=${broker.id}`);
+      const res = await fetch(`${API_BASE_URL}/listings?broker_id=${broker.id}`);
       if (!res.ok) {
         throw new Error('Failed to load listings');
       }
@@ -161,7 +163,7 @@ function BrokerDashboard({ broker }) {
         });
       }
 
-      const response = await fetch('http://127.0.0.1:8000/api/listings', {
+      const response = await fetch(`${API_BASE_URL}/listings`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -251,7 +253,7 @@ function BrokerDashboard({ broker }) {
           });
         }
 
-        response = await fetch(`http://127.0.0.1:8000/api/listings/${editListing.id}`, {
+        response = await fetch(`${API_BASE_URL}/listings/${editListing.id}`, {
           method: 'PUT',
           headers: {
             Accept: 'application/json',
@@ -259,7 +261,7 @@ function BrokerDashboard({ broker }) {
           body: formData,
         });
       } else {
-        response = await fetch(`http://127.0.0.1:8000/api/listings/${editListing.id}`, {
+        response = await fetch(`${API_BASE_URL}/listings/${editListing.id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -293,7 +295,7 @@ function BrokerDashboard({ broker }) {
     setListingError(null);
 
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/listings/${listingId}`, {
+      const response = await fetch(`${API_BASE_URL}/listings/${listingId}`, {
         method: 'DELETE',
         headers: { Accept: 'application/json' },
       });
@@ -1232,7 +1234,7 @@ function App() {
     setActiveListingLoading(true);
 
     try {
-      const res = await fetch(`http://127.0.0.1:8000/api/listings/${listingId}`);
+      const res = await fetch(`${API_BASE_URL}/listings/${listingId}`);
       if (!res.ok) {
         throw new Error('Failed to load listing details');
       }
@@ -1306,7 +1308,7 @@ function App() {
     };
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/inquiries', {
+      const response = await fetch(`${API_BASE_URL}/inquiries`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -1393,7 +1395,7 @@ function App() {
         description: [contactForm.subject, contactForm.message].filter(Boolean).join(' - '),
       };
 
-      const response = await fetch('http://127.0.0.1:8000/api/inquiries', {
+      const response = await fetch(`${API_BASE_URL}/inquiries`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -1467,8 +1469,8 @@ function App() {
         throw new Error(fieldErrors.email || fieldErrors.phone);
       }
       const url = isLogin
-        ? 'http://127.0.0.1:8000/api/brokers/login'
-        : 'http://127.0.0.1:8000/api/brokers/register';
+        ? `${API_BASE_URL}/brokers/login`
+        : `${API_BASE_URL}/brokers/register`;
 
       const payload = isLogin
         ? { email: form.email, phone: form.phone }
@@ -1525,9 +1527,9 @@ function App() {
     setAdminDataError(null);
     try {
       const [inquiriesRes, brokersRes, listingsRes] = await Promise.all([
-        fetch('http://127.0.0.1:8000/api/inquiries'),
-        fetch('http://127.0.0.1:8000/api/admin/brokers'),
-        fetch('http://127.0.0.1:8000/api/listings'),
+        fetch(`${API_BASE_URL}/inquiries`),
+        fetch(`${API_BASE_URL}/admin/brokers`),
+        fetch(`${API_BASE_URL}/listings`),
       ]);
 
       if (!inquiriesRes.ok) {
@@ -1579,7 +1581,7 @@ function App() {
   const toggleBrokerStatus = async (brokerId) => {
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/api/admin/brokers/${brokerId}/toggle`,
+        `${API_BASE_URL}/admin/brokers/${brokerId}/toggle`,
         {
           method: 'PATCH',
           headers: {
@@ -1624,7 +1626,7 @@ function App() {
         setListingsLoading(true);
         setListingsError(null);
 
-        let url = 'http://127.0.0.1:8000/api/listings';
+        let url = `${API_BASE_URL}/listings`;
         const params = selectedCategory ? map[selectedCategory] : null;
         if (params) {
           const query = new URLSearchParams(params).toString();
@@ -1660,7 +1662,7 @@ function App() {
     if (!value) return;
     try {
       const params = new URLSearchParams({ [field]: value }).toString();
-      const res = await fetch(`http://127.0.0.1:8000/api/brokers/check-unique?${params}`);
+      const res = await fetch(`${API_BASE_URL}/brokers/check-unique?${params}`);
       if (!res.ok) return;
       const data = await res.json();
 
