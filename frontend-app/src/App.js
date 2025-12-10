@@ -2342,7 +2342,7 @@ function App() {
         <div className="home-deals-grid">
           {listings.slice(0, homeListingsLimit).map((listing) => {
             const imageUrl = listing.image_path
-              ? `http://127.0.0.1:8000/storage/${listing.image_path}`
+              ? `${process.env.REACT_APP_STORAGE_URL}/${listing.image_path}`
               : '/placeholder-house.jpg';
 
             const isRent = listing.purpose === 'rent';
@@ -2833,7 +2833,7 @@ function App() {
                         {hasPhotos ? (
                           <div className="h-60 md:h-80 lg:h-96 overflow-hidden">
                             <img
-                              src={`http://127.0.0.1:8000/storage/${current.path}`}
+                              src={`${process.env.REACT_APP_STORAGE_URL}/${current.path}`}
                               alt={current.alt}
                               className="w-full h-full object-cover"
                             />
@@ -2894,7 +2894,7 @@ function App() {
                                     `}
                                   >
                                     <img
-                                      src={`http://127.0.0.1:8000/storage/${img.path}`}
+                                      src={`${process.env.REACT_APP_STORAGE_URL}/${current.path}`}
                                       alt={img.alt}
                                       className="w-full h-full object-cover"
                                     />
